@@ -74,6 +74,7 @@ nav .w{display:flex;align-items:center;justify-content:space-between;height:62px
 .bars{flex:1;min-width:240px}.bars div{display:grid;grid-template-columns:20px 1fr 48px;gap:10px;align-items:center;font-size:13px;color:var(--mute);margin:6px 0}.bars i{height:6px;background:var(--g2);border-radius:3px;overflow:hidden}.bars i b{display:block;height:100%;background:var(--amb)}
 .loc{display:grid;grid-template-columns:1fr 1fr;gap:40px}
 .map{min-height:340px;border-radius:6px;border:1px solid var(--line);background:radial-gradient(circle at 50% 50%,rgba(255,176,46,.18),transparent 45%),repeating-linear-gradient(0deg,#101010 0 38px,#161616 38px 40px),repeating-linear-gradient(90deg,transparent 0 58px,#161616 58px 60px);display:grid;place-items:center;text-align:center;padding:20px}
+.map{position:relative;overflow:hidden}.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:2;filter:invert(.9) hue-rotate(180deg) saturate(.7) brightness(.95) contrast(1.05)}.map .fb{position:relative;z-index:1}
 .pin{width:18px;height:18px;border-radius:50%;background:var(--amb);margin:0 auto 14px;box-shadow:0 0 0 8px rgba(255,176,46,.2),0 0 40px var(--amb)}
 .hrs{width:100%;border-collapse:collapse;margin:18px 0 26px}.hrs td{padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}.hrs td:last-child{text-align:right;font-weight:700}
 footer{padding:36px 0 50px;border-top:1px solid var(--line);color:var(--mute);font-size:14px}footer .w{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
@@ -130,7 +131,7 @@ footer{padding:36px 0 50px;border-top:1px solid var(--line);color:var(--mute);fo
 <div class="cta"><a class="btn hot" href="https://www.google.com/maps/dir/?api=1&destination=Hope+Barber+Shop+Stacha+%C5%9Awistackiego+15+Wroc%C5%82aw" target="_blank" rel="noopener" data-t="route"></a>
 <a class="btn hot" href="https://search.google.com/local/writereview?placeid=ChIJ32REbrhRUScR7kXcWgZH7gc" target="_blank" rel="noopener" data-t="gr"></a></div>
 <div class="cta" style="margin-top:14px"><a class="btn ghost" href="tel:+48733502861">+48 733 502 861</a><a class="btn ghost" href="https://www.instagram.com/hope.barber.shop" target="_blank" rel="noopener">Instagram</a></div></div>
-<div class="map"><div><div class="pin"></div><b style="font:500 20px Unbounded">Hope Barber Shop</b><p style="color:var(--mute);margin:8px 0 0" data-t="park"></p></div></div>
+<div class="map"><iframe id="gmap" title="Hope Barber Shop – mapa" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://www.google.com/maps?q=51.0977299,17.0502276&z=17&hl=pl&output=embed"></iframe><div class="fb"><div class="pin"></div><b style="font:500 20px Unbounded">Hope Barber Shop</b><p style="color:var(--mute);margin:8px 0 0" data-t="park"></p></div></div>
 </div></section>
 
 <footer><div class="w"><span>© 2026 Hope Barber Shop, Wrocław</span><span>+48 733 502 861 · barberjurek@gmail.com</span></div></footer>
@@ -165,6 +166,7 @@ document.getElementById("hrs").innerHTML=D.map((d,i)=>`<tr><td>${DN[lang][i]}</t
 document.addEventListener("click",e=>{const l=e.target.closest(".lang button");if(l){lang=l.dataset.l;try{localStorage.setItem("hl",lang)}catch(x){}render()}
 const b=e.target.closest("#tabs button");if(b){cur=+b.dataset.i;render()}});
 render();
+document.addEventListener("securitypolicyviolation",e=>{const f=document.getElementById("gmap");if(f&&String(e.blockedURI).indexOf("google")>-1)f.remove()});
 </script>
 </body>
 </html>
